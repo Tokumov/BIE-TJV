@@ -1,11 +1,10 @@
-### Java Spring template project
+# Specification
+A Kazakh cuisine restaurant offers a unique dining experience that showcases the delicious and flavorful food of the Kazakh people. Kazakh cuisine is a fusion of various cooking traditions from Central Asia, Europe, and the Middle East, resulting in a rich and diverse menu. This project is about food delivery from a restaurant. The user will have to be able to order food and book the seats in the restaurant, and all his orders will have to be stored in the database.
+# Complex query
+- Tracking the Progress of Food Orders: This entails establishing a system to monitor the status of food orders. It necessitates queries to determine the status of each order, including order preparation and delivery, and the estimated time until the next step.
 
-This project is based on a GitLab [Project Template](https://docs.gitlab.com/ee/gitlab-basics/create-project.html).
+- Reservation Availability: Ensuring that customers can ascertain the availability of seats for dining at the restaurant, providing a seamless booking experience.
 
-Improvements can be proposed in the [original project](https://gitlab.com/gitlab-org/project-templates/spring).
-
-### CI/CD with Auto DevOps
-
-This template is compatible with [Auto DevOps](https://docs.gitlab.com/ee/topics/autodevops/).
-
-If Auto DevOps is not already enabled for this project, you can [turn it on](https://docs.gitlab.com/ee/topics/autodevops/#enabling-auto-devops) in the project settings.
+# Business logic
+- filtering and searching for food by name
+- after ordering, the order history will be saved in the user's DB

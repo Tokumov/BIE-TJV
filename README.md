@@ -3,8 +3,5 @@ A Kazakh cuisine restaurant offers a unique dining experience that showcases the
 # Complex query
 - Tracking the Progress of Food Orders: This entails establishing a system to monitor the status of food orders. It necessitates queries to determine the status of each order, including order preparation and delivery, and the estimated time until the next step.
 
-- Reservation Availability: Ensuring that customers can ascertain the availability of seats for dining at the restaurant, providing a seamless booking experience.
-
 # Business logic
 - filtering and searching for food by name
-- after ordering, the order history will be saved in the user's DB

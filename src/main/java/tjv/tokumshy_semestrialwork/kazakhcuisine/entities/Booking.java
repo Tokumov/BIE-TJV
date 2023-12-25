@@ -7,7 +7,7 @@ import jakarta.persistence.ManyToOne;
 import java.sql.Time;
 import java.text.DateFormat;
 @Entity
-public class Booking {
+public class Booking implements EntityWithId<Long> {
     @Id
     private Long idBooking;
     private Time time;
@@ -15,4 +15,8 @@ public class Booking {
     @ManyToOne
     private Clients booking_client;
 
+    @Override
+    public Long getId() {
+        return idBooking;
+    }
 }

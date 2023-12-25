@@ -7,7 +7,7 @@ import jakarta.persistence.OneToMany;
 import java.util.Collection;
 
 @Entity
-public class Clients {
+public class Clients implements EntityWithId<Long> {
     @Id
     private Long idClients;
     private String nameClient;
@@ -17,4 +17,8 @@ public class Clients {
     @OneToMany(mappedBy = "booking_client")
     private Collection<Booking> client_booking;
 
+    @Override
+    public Long getId() {
+        return idClients;
+    }
 }

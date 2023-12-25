@@ -8,7 +8,7 @@ import jakarta.persistence.ManyToOne;
 import java.util.Collection;
 
 @Entity
-public class Menu {
+public class Menu implements EntityWithId<Long> {
     @Id
     private long idMenu;
     private String nameMenu;
@@ -17,4 +17,9 @@ public class Menu {
 
     @ManyToMany
     private Collection<Orders> menu_order;
+
+    @Override
+    public Long getId() {
+        return idMenu;
+    }
 }

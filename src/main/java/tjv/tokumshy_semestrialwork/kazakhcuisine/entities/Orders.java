@@ -15,5 +15,5 @@ public class Orders {
     @ManyToOne
     private Clients orders_client;
     @ManyToMany
-    private Collection<Orders> orders_Menu;
+    private Collection<Menu> orders_Menu;
 }

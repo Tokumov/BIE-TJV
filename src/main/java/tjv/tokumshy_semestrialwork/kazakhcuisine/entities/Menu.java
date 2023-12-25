@@ -22,4 +22,9 @@ public class Menu implements EntityWithId<Long> {
     public Long getId() {
         return idMenu;
     }
+
+    @Override
+    public void setId(Long aLong) {
+        idMenu=aLong;
+    }
 }

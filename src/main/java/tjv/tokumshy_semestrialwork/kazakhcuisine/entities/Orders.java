@@ -21,4 +21,9 @@ public class Orders implements EntityWithId<Long> {
     public Long getId() {
         return id;
     }
+
+    @Override
+    public void setId(Long aLong) {
+        id=aLong;
+    }
 }

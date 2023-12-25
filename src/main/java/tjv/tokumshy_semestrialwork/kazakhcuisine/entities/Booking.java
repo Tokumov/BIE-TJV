@@ -19,4 +19,9 @@ public class Booking implements EntityWithId<Long> {
     public Long getId() {
         return idBooking;
     }
+
+    @Override
+    public void setId(Long aLong) {
+        idBooking=aLong;
+    }
 }

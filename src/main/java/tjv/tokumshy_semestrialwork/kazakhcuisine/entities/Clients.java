@@ -21,4 +21,9 @@ public class Clients implements EntityWithId<Long> {
     public Long getId() {
         return idClients;
     }
+
+    @Override
+    public void setId(Long aLong) {
+        idClients=aLong;
+    }
 }

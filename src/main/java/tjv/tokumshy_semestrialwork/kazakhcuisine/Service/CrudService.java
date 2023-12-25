@@ -26,6 +26,9 @@ public abstract class CrudService <E extends EntityWithId<ID>, ID, R extends Cru
 
     }
     public void update(ID id, E data){
+        if(!repository.existsById(id))
+            throw new EntityDoesNotExistException();
+        data.setId(id);
         repository.save(data);
     }
     public void deleteById(ID id){

@@ -13,6 +13,6 @@ public class Booking {
     private Time time;
     private DateFormat date;
     @ManyToOne
-    private Clients client_to_booking;
+    private Clients booking_client;
 
 }

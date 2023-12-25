@@ -14,8 +14,7 @@ public class Menu {
     private String nameMenu;
     private int price;
 
-    @ManyToOne
-    private Clients clientsInfo;
+
     @ManyToMany
-    private Collection<Orders> menuInfo;
+    private Collection<Orders> menu_order;
 }

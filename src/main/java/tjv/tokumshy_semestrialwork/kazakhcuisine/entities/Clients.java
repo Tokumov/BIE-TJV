@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 public class Clients implements EntityWithId<Long> {
@@ -25,5 +26,18 @@ public class Clients implements EntityWithId<Long> {
     @Override
     public void setId(Long aLong) {
         idClients=aLong;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Clients clients = (Clients) o;
+        return Objects.equals(idClients, clients.idClients);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idClients);
     }
 }

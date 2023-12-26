@@ -15,7 +15,7 @@ public abstract class CrudController<E extends EntityWithId<ID>,ID, S extends Cr
     }
     @PostMapping
     @ResponseBody
-    public E create(E data){
+    public E create(@RequestBody E data){
         try {
             return service.create(data);
         }catch (EntityDoesNotExistException e){
@@ -36,7 +36,7 @@ public abstract class CrudController<E extends EntityWithId<ID>,ID, S extends Cr
     }
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(ID id, E data){
+    public void update(@PathVariable ID id, @RequestBody E data){
         try{
         service.update(id, data);
         }catch (EntityDoesNotExistException e){

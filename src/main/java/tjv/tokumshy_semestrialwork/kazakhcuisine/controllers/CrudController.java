@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.Service.CrudService;
-import tjv.tokumshy_semestrialwork.kazakhcuisine.Service.EntityDoesNotExistException;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityDoesNotExistException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.entities.EntityWithId;
 
 public abstract class CrudController<E extends EntityWithId<ID>,ID, S extends CrudService<E, ID, R>, R extends CrudRepository <E,ID>>{

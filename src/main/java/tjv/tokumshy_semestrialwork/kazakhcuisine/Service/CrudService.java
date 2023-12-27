@@ -1,7 +1,8 @@
 package tjv.tokumshy_semestrialwork.kazakhcuisine.Service;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Service;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityCannotBeCreatedException;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityDoesNotExistException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.entities.EntityWithId;
 
 import java.util.Optional;

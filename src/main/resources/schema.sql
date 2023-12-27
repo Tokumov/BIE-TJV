@@ -36,9 +36,8 @@ create table if not exists menu_and_orders(
                                               primary key(orders_id_menu,menu_id_orders)
     );
 create table if not exists booking(
-                                      id_booking bigserial ,
+                                      id_booking bigserial primary key ,
                                       time_of_booking time,
                                       date_of_booking date,
-                                      client_id_booking bigint references clients,
-                                      primary key(id_booking,client_id_booking)
+                                      client_id_booking bigint references clients
     );

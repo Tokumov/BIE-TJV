@@ -1,20 +1,26 @@
 package tjv.tokumshy_semestrialwork.kazakhcuisine.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.util.Collection;
 
 @Entity
 public class Orders implements EntityWithId<Long> {
     @Id
+    @Column(name="id_orders")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int totalcost;
+    @Column(name="total_cost")
+    private Long totalcost;
     @ManyToOne
+    @JoinColumn(name="client_id_orders")
     private Clients orders_client;
     @ManyToMany
+    @JoinTable(
+            name="menu_and_orders",
+            joinColumns = @JoinColumn(name="orders_id_menu"),
+            inverseJoinColumns = @JoinColumn(name="menu_id_orders")
+    )
     private Collection<Menu> orders_Menu;
 
     @Override

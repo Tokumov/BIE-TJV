@@ -1,8 +1,6 @@
 package tjv.tokumshy_semestrialwork.kazakhcuisine.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -10,8 +8,12 @@ import java.util.Objects;
 @Entity
 public class Clients implements EntityWithId<Long> {
     @Id
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idClients;
+    @Column(name="name")
     private String nameClient;
+    @Column(name="surname")
     private String surnameClient;
     @OneToMany(mappedBy = "orders_client")
     private Collection<Orders> client_order;

@@ -1,4 +1,4 @@
-package tjv.tokumshy_semestrialwork.kazakhcuisine.controllers;
+package com.example.frontend.ui;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

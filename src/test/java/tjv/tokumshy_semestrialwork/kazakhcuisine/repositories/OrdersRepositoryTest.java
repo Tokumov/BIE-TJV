@@ -15,4 +15,8 @@ class OrdersRepositoryTest {
     @Test
     void findOrdersWithThreeDishesUnder15Euros() {
     }
+
+    @Test
+    void findOrdersWithNDishesUnderKPrice() {
+    }
 }

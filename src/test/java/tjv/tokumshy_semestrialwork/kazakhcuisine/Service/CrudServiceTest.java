@@ -17,7 +17,7 @@ class CrudServiceUnitTest {
     private CrudServiceSubclass service;
     @Test
     void createIdDoesNotExist() {
-        Clients newClient = new Clients();
+        Clients newClient = new Clients(1L,"2","3");
         Mockito.when(clientRepository.existsById(newClient.getId())).thenReturn(false);
         Mockito.when(clientRepository.save(newClient)).thenReturn(newClient);
 

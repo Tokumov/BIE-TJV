@@ -9,6 +9,7 @@ public class MainController {
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("name", "Main page yopt");
+        System.out.println("check");
         return "home";
     }
 

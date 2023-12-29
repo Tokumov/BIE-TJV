@@ -19,5 +19,14 @@
         <a class="py-2 link-body-emphasis text-decoration-none" href="#">Pricing</a>
     </nav>
 </div>
+<div class="container mt-5 mb-5">
+    <h1>Adding client</h1>
+    <form action="@{/client}" th:action="@{/client}" th:object="${clientDto}" method="post">
+        <input type="text" th:field="*{nameClient}" />
+        <input type="text" th:field="*{surnameClient}" />
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<p th:text="|Sup, ${name}!|" />
 </body>
 </html>

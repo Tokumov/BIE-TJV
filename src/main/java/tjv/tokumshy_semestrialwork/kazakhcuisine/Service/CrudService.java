@@ -14,7 +14,9 @@ public abstract class CrudService <E extends EntityWithId<ID>, ID, R extends Cru
         this.repository=repository;
     }
     public E create(E data){
-        if(repository.existsById(data.getId()))
+        System.out.println("yeap you get it123123");
+        ID id =data.getId();
+        if(id!=null && repository.existsById(data.getId()))
            throw new EntityCannotBeCreatedException();
         return repository.save(data);
     }

@@ -16,9 +16,10 @@ public abstract class CrudController<E extends EntityWithId<ID>,ID, S extends Cr
     @PostMapping
     @ResponseBody
     public E create(@RequestBody E data){
-        try {
+        try { System.out.println("yeap you get it");
             return service.create(data);
         }catch (EntityDoesNotExistException e){
+            System.out.println("yeap you get it2");
             throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
     }

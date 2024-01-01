@@ -6,12 +6,13 @@ import jakarta.ws.rs.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 @Controller
-
-public class ClientController {
-    @Autowired
+public class MenuController {
+    /*@Autowired
     private ClientsService clientsService;
     @GetMapping("/client")
     public String clientlist(Model model) {
@@ -25,17 +26,14 @@ public class ClientController {
         return "addclient";
     }
 
- /*   @PostMapping("client/add")
-    public String clientPostAdd(@RequestParam String name, @RequestParam String surname, Model model){
-        return "";
-    }*/
- @PostMapping("/client/add")
- public String addClient(@ModelAttribute ClientsDto clientsDto, Model model) {
-     System.out.println("HUIHUIHUI");
-     System.out.println(clientsDto.getName());
-     clientsService.create(clientsDto);
-     return "redirect:/client"; // Redirect to a confirmation page or back to the form
- }
+
+    @PostMapping("/client/add")
+    public String addClient(@ModelAttribute ClientsDto clientsDto, Model model) {
+        System.out.println("HUIHUIHUI");
+        System.out.println(clientsDto.getName());
+        clientsService.create(clientsDto);
+        return "redirect:/client"; // Redirect to a confirmation page or back to the form
+    }
     @GetMapping("client/delete/{id}")
     public String deleteClient(@PathVariable Long id){
         clientsService.setCurrentClient(id);
@@ -55,9 +53,9 @@ public class ClientController {
         try {
             clientsService.update(client);
         } catch (BadRequestException e) {
-        System.out.println("There is nothing bro");
+            System.out.println("There is nothing bro");
         }
         model.addAttribute("client", client);
         return "redirect:/client";
-    }
+    }*/
 }

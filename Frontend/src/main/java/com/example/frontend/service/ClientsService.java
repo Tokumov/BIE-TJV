@@ -43,8 +43,8 @@ public class ClientsService {
         var cur = clientClient.readOne();
         if (cur.isPresent()) {
             var client = cur.get();
-            client.setNameClient(name);
-            client.setSurnameClient(surname);
+            client.setName(name);
+            client.setSurname(surname);
             client.setClient_order(ordersId);
             update(client);
         }

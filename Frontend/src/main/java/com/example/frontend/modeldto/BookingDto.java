@@ -4,6 +4,11 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class BookingDto {
+    private Long id_booking;
+    private Time time_of_booking;
+    private Date date_of_booking;
+
+    private Long booking_client;
 
     public Long getId_booking() {
         return id_booking;
@@ -37,10 +42,6 @@ public class BookingDto {
         this.booking_client = booking_client;
     }
 
-    private Long id_booking;
-    private Time time_of_booking;
-    private Date date_of_booking;
 
-    private Long booking_client;
 
 }

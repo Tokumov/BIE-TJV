@@ -13,36 +13,27 @@ public class ClientsDto {
     private Collection<Long> client_order;
 
     private Collection<Long> client_booking;
-    public ClientsDto(){
 
+    public void setId(Long id) {
+        this.id = id;
     }
-    public ClientsDto(String name, String surname){
-        this.surname=surname;
-        this.name=name;
-
-    }
-    public Long getIdClients() {
+    public Long getId() {
         return id;
     }
-
-    public void setIdClients(Long idClients) {
-        this.id = idClients;
-    }
-
-    public String getNameClient() {
+    public String getName() {
         return name;
     }
 
-    public void setNameClient(String nameClient) {
-        this.name = nameClient;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getSurnameClient() {
+    public String getSurname() {
         return surname;
     }
 
-    public void setSurnameClient(String surnameClient) {
-        this.surname = surnameClient;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public Collection<Long> getClient_order() {
@@ -60,5 +51,16 @@ public class ClientsDto {
     public void setClient_booking(Collection<Long> client_booking) {
         this.client_booking = client_booking;
     }
+
+    public ClientsDto(){
+
+    }
+    public ClientsDto(String name, String surname){
+        this.surname=surname;
+        this.name=name;
+
+    }
+
+
 
 }

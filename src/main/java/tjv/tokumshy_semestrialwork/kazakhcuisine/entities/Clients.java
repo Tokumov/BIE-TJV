@@ -12,11 +12,11 @@ public class Clients implements EntityWithId<Long> {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idClients;
+    private Long id;
     @Column(name="name")
-    private String nameClient;
+    private String name;
     @Column(name="surname")
-    private String surnameClient;
+    private String surname;
     @OneToMany(mappedBy = "orders_client")
     private Collection<Orders> client_order;
     @OneToMany(mappedBy = "booking_client")
@@ -26,28 +26,25 @@ public class Clients implements EntityWithId<Long> {
 
     }
 
-    public Long getIdClients() {
-        return idClients;
-    }
 
     public void setIdClients(Long idClients) {
-        this.idClients = idClients;
+        this.id = idClients;
     }
 
-    public String getNameClient() {
-        return nameClient;
+    public String getName() {
+        return name;
     }
 
-    public void setNameClient(String nameClient) {
-        this.nameClient = nameClient;
+    public void setName(String nameClient) {
+        this.name = nameClient;
     }
 
-    public String getSurnameClient() {
-        return surnameClient;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setSurnameClient(String surnameClient) {
-        this.surnameClient = surnameClient;
+    public void setSurname(String surnameClient) {
+        this.surname = surnameClient;
     }
 
     public Collection<Orders> getClient_order() {
@@ -68,12 +65,12 @@ public class Clients implements EntityWithId<Long> {
 
     @Override
     public Long getId() {
-        return idClients;
+        return id;
     }
 
     @Override
     public void setId(Long aLong) {
-        idClients=aLong;
+        id=aLong;
     }
 
     @Override
@@ -81,18 +78,18 @@ public class Clients implements EntityWithId<Long> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Clients clients = (Clients) o;
-        return Objects.equals(idClients, clients.idClients);
+        return Objects.equals(id, clients.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idClients);
+        return Objects.hash(id);
     }
 
     public Clients(Long id, String name, String surname) {
-        this.idClients = id;
-        this.nameClient = name;
-        this.surnameClient = surname;
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
         client_order=new HashSet<>();
         client_booking=new HashSet<>();
     }
@@ -100,9 +97,9 @@ public class Clients implements EntityWithId<Long> {
     @Override
     public String toString() {
         return "Clients{" +
-                "idClients=" + idClients +
-                ", nameClient='" + nameClient + '\'' +
-                ", surnameClient='" + surnameClient + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
                 ", client_order=" + client_order +
                 ", client_booking=" + client_booking +
                 '}';

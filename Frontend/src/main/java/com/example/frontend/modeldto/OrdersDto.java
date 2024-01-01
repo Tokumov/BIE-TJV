@@ -11,6 +11,9 @@ public class OrdersDto {
 
     private Collection<Long> orders_Menu;
 
+    public OrdersDto(){
+        
+    }
     public Long getId() {
         return id;
     }

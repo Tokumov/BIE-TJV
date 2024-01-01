@@ -23,6 +23,7 @@ public abstract class CrudController<E extends EntityWithId<ID>,ID, S extends Cr
             throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
     }
+    @GetMapping ("")
     public Iterable<E> readAll(){
         return service.readAll();
     }
@@ -35,6 +36,7 @@ public abstract class CrudController<E extends EntityWithId<ID>,ID, S extends Cr
         else
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
+
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable ID id, @RequestBody E data){

@@ -1,24 +1,31 @@
 package com.example.frontend.modeldto;
 
 public class MenuDto {
-    private long idMenu;
-    private String nameMenu;
+    private long id;
+    private String name;
     private Long price;
+    public MenuDto(){
 
-    public long getIdMenu() {
-        return idMenu;
+    }
+    public MenuDto(String name, Long price){
+        this.name=name;
+        this.price=price;
     }
 
-    public void setIdMenu(long idMenu) {
-        this.idMenu = idMenu;
+    public long getId() {
+        return id;
     }
 
-    public String getNameMenu() {
-        return nameMenu;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setNameMenu(String nameMenu) {
-        this.nameMenu = nameMenu;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getPrice() {

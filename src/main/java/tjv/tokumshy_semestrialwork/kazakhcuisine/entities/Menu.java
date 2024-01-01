@@ -8,17 +8,37 @@ import java.util.Collection;
 public class Menu implements EntityWithId<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idMenu;
-    private String nameMenu;
+    private long id;
+    private String name;
     private Long price;
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
 
     @Override
     public Long getId() {
-        return idMenu;
+        return id;
     }
 
     @Override
     public void setId(Long aLong) {
-        idMenu=aLong;
+        id=aLong;
     }
 }

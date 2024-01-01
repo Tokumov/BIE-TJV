@@ -31,7 +31,7 @@ public class ClientsService {
     }
 
     public void setCurrentClient(long id) {
-        clientClient.setCurrentClient(id);
+        clientClient.setCurrent(id);
     }
 
 
@@ -39,16 +39,6 @@ public class ClientsService {
         clientClient.updateOne(e);
     }
 
-    public void update(String name, String surname, Collection<Long> ordersId) {
-        var cur = clientClient.readOne();
-        if (cur.isPresent()) {
-            var client = cur.get();
-            client.setName(name);
-            client.setSurname(surname);
-            client.setClient_order(ordersId);
-            update(client);
-        }
-    }
     public void deleteOne() {
         clientClient.deleteOne();
     }

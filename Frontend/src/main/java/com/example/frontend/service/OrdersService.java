@@ -32,7 +32,7 @@ public class OrdersService {
         return ordersClient.readOne();
     }
 
-    public void setCurrentClient(long id) {
+    public void setCurrentOrder(long id) {
         ordersClient.setCurrent(id);
     }
 

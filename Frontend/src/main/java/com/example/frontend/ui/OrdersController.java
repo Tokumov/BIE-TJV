@@ -2,8 +2,10 @@ package com.example.frontend.ui;
 
 import com.example.frontend.modeldto.ClientsDto;
 import com.example.frontend.modeldto.MenuDto;
+import com.example.frontend.modeldto.OrdersDto;
 import com.example.frontend.service.ClientsService;
 import com.example.frontend.service.MenuService;
+import com.example.frontend.service.OrdersService;
 import jakarta.ws.rs.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,53 +17,47 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class OrdersController {
     @Autowired
-    private MenuService menuService;
-    @GetMapping("/menu")
+    private OrdersService ordersService;
+    @GetMapping("/orders")
     public String menulist(Model model) {
-        model.addAttribute("menulist", menuService.readAll());
+        model.addAttribute("menulist", ordersService.readAll());
         return "menu";
     }
-    @GetMapping("/menu/add")
+    @GetMapping("/orders/add")
     public String addMenu(Model model) {
-        model.addAttribute("menuDto", new MenuDto());
+        model.addAttribute("ordersDto", new OrdersDto());
         System.out.println("pizda");
-        return "addMenu";
+        return "addOrders";
     }
 
-    @PostMapping("/menu/add")
-    public String addMenu(@ModelAttribute MenuDto menuDto, Model model) {
+    @PostMapping("/orders/add")
+    public String addMenu(@ModelAttribute OrdersDto ordersDto, Model model) {
         System.out.println("HUIHUIHUI");
-        System.out.println(menuDto.getName());
-        if(menuDto.getPrice()==null){
-            System.out.println("Error validation bro");
-            return "redirect /menu";
-        }
-        menuService.create(menuDto);
-
+        ordersService.create(ordersDto);
         return "redirect:/menu"; // Redirect to a confirmation page or back to the form
     }
-    @GetMapping("menu/delete/{id}")
-    public String deleteMenu(@PathVariable Long id){
-        menuService.setCurrentMenu(id);
-        menuService.deleteOne();
-        return "redirect:/menu";
+    @GetMapping("orders/delete/{id}")
+    public String deleteOrders(@PathVariable Long id){
+        ordersService.setCurrentOrder(id);
+        ordersService.deleteOne();
+        return "redirect:/orders";
     }
-    @GetMapping("menu/edit/{id}")
+    @GetMapping("orders/edit/{id}")
     public String editMenu(@PathVariable long id, Model model) {
-        menuService.setCurrentMenu(id);
-        model.addAttribute("menu", menuService.readOne().orElseThrow());
-        return "editmenu";
+        ordersService.setCurrentOrder(id);
+        model.addAttribute("orders", ordersService.readOne().orElseThrow());
+        return "editOrders";
     }
 
     @PostMapping("menu/edit")
-    public String editMenu(@ModelAttribute MenuDto menu, Model model) {
-        menuService.setCurrentMenu(menu.getId());
+    public String editMenu(@ModelAttribute OrdersDto ordersDto, Model model) {
+        ordersService.setCurrentOrder(ordersDto.getId());
         try {
-            menuService.update(menu);
+            ordersService.update(ordersDto);
         } catch (BadRequestException e) {
             System.out.println("There is nothing bro");
         }
-        model.addAttribute("client", menu);
+        model.addAttribute("client", ordersDto);
         return "redirect:/menu";
     }
 }

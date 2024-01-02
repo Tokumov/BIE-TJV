@@ -17,9 +17,9 @@ public class ClientsClient {
     private WebTarget target;
     private WebTarget current;
 
-    public ClientsClient(@Value("http://localhost:8081") String apiUrl) {
+    public ClientsClient(@Value("http://localhost:8081") String baseurl) {
         var c = ClientBuilder.newClient();
-        baseUrl = c.target(apiUrl + "/clients");
+        baseUrl = c.target(baseurl + "/clients");
         target = baseUrl.path("/{id}");
     }
 

@@ -1,7 +1,9 @@
 package com.example.frontend.ui;
 
 import com.example.frontend.modeldto.ClientsDto;
+import com.example.frontend.modeldto.MenuDto;
 import com.example.frontend.service.ClientsService;
+import com.example.frontend.service.MenuService;
 import jakarta.ws.rs.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,50 +14,54 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class OrdersController {
-    /*//не доделал,начал но было лень.
     @Autowired
-    private ClientsService clientsService;
-    @GetMapping("/orders")
-    public String clientlist(Model model) {
-        model.addAttribute("Clientslist", clientsService.readAll());
-        return "orders";
+    private MenuService menuService;
+    @GetMapping("/menu")
+    public String menulist(Model model) {
+        model.addAttribute("menulist", menuService.readAll());
+        return "menu";
     }
-    @GetMapping("/orders/add")
-    public String addClient(Model model) {
-        model.addAttribute("clientDto", new ClientsDto());
+    @GetMapping("/menu/add")
+    public String addMenu(Model model) {
+        model.addAttribute("menuDto", new MenuDto());
         System.out.println("pizda");
-        return "addclient";
+        return "addMenu";
     }
 
-    @PostMapping("/client/add")
-    public String addClient(@ModelAttribute ClientsDto clientsDto, Model model) {
+    @PostMapping("/menu/add")
+    public String addMenu(@ModelAttribute MenuDto menuDto, Model model) {
         System.out.println("HUIHUIHUI");
-        System.out.println(clientsDto.getName());
-        clientsService.create(clientsDto);
-        return "redirect:/client"; // Redirect to a confirmation page or back to the form
+        System.out.println(menuDto.getName());
+        if(menuDto.getPrice()==null){
+            System.out.println("Error validation bro");
+            return "redirect /menu";
+        }
+        menuService.create(menuDto);
+
+        return "redirect:/menu"; // Redirect to a confirmation page or back to the form
     }
-    @GetMapping("client/delete/{id}")
-    public String deleteClient(@PathVariable Long id){
-        clientsService.setCurrentClient(id);
-        clientsService.deleteOne();
-        return "redirect:/client";
+    @GetMapping("menu/delete/{id}")
+    public String deleteMenu(@PathVariable Long id){
+        menuService.setCurrentMenu(id);
+        menuService.deleteOne();
+        return "redirect:/menu";
     }
-    @GetMapping("client/edit/{id}")
-    public String editClient(@PathVariable long id, Model model) {
-        clientsService.setCurrentClient(id);
-        model.addAttribute("client", clientsService.readOne().orElseThrow());
-        return "editclient";
+    @GetMapping("menu/edit/{id}")
+    public String editMenu(@PathVariable long id, Model model) {
+        menuService.setCurrentMenu(id);
+        model.addAttribute("menu", menuService.readOne().orElseThrow());
+        return "editmenu";
     }
 
-    @PostMapping("client/edit")
-    public String editClient(@ModelAttribute ClientsDto client, Model model) {
-        clientsService.setCurrentClient(client.getId());
+    @PostMapping("menu/edit")
+    public String editMenu(@ModelAttribute MenuDto menu, Model model) {
+        menuService.setCurrentMenu(menu.getId());
         try {
-            clientsService.update(client);
+            menuService.update(menu);
         } catch (BadRequestException e) {
             System.out.println("There is nothing bro");
         }
-        model.addAttribute("client", client);
-        return "redirect:/client";
-    }*/
+        model.addAttribute("client", menu);
+        return "redirect:/menu";
+    }
 }

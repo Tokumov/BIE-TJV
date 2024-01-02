@@ -32,7 +32,12 @@ public class MenuController {
     public String addMenu(@ModelAttribute MenuDto menuDto, Model model) {
         System.out.println("HUIHUIHUI");
         System.out.println(menuDto.getName());
+        if(menuDto.getPrice()==null){
+            System.out.println("Error validation bro");
+            return "redirect /menu";
+        }
         menuService.create(menuDto);
+
         return "redirect:/menu"; // Redirect to a confirmation page or back to the form
     }
     @GetMapping("menu/delete/{id}")

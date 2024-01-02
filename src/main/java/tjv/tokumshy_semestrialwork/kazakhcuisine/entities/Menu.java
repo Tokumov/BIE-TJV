@@ -8,9 +8,15 @@ import java.util.Collection;
 public class Menu implements EntityWithId<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id_menu")
     private long id;
+    @Column(name="name_menu")
     private String name;
+    @Column(name="price")
     private Long price;
+
+    @ManyToMany(mappedBy = "orders_Menu")
+    private Collection<Orders> menu_orders;
 
     public void setId(long id) {
         this.id = id;

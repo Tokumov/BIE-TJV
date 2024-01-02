@@ -19,9 +19,9 @@ public class MenuClient {
     private WebTarget target;
     private WebTarget current;
 
-    public MenuClient(@Value("http://localhost:8081") String apiUrl) {
+    public MenuClient(@Value("http://localhost:8081") String baseurl) {
         var c = ClientBuilder.newClient();
-        baseUrl = c.target(apiUrl + "/menu");
+        baseUrl = c.target(baseurl + "/menu");
         target = baseUrl.path("/{id}");
     }
 

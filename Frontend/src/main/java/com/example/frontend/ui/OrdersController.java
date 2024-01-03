@@ -1,10 +1,6 @@
 package com.example.frontend.ui;
 
-import com.example.frontend.modeldto.ClientsDto;
-import com.example.frontend.modeldto.MenuDto;
 import com.example.frontend.modeldto.OrdersDto;
-import com.example.frontend.service.ClientsService;
-import com.example.frontend.service.MenuService;
 import com.example.frontend.service.OrdersService;
 import jakarta.ws.rs.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +15,25 @@ public class OrdersController {
     @Autowired
     private OrdersService ordersService;
     @GetMapping("/orders")
-    public String menulist(Model model) {
-        model.addAttribute("menulist", ordersService.readAll());
-        return "menu";
+    public String orderslist(Model model) {
+        model.addAttribute("orderslist", ordersService.readAll());
+        return "orders";
     }
     @GetMapping("/orders/add")
-    public String addMenu(Model model) {
+    public String addOrders(Model model) {
         model.addAttribute("ordersDto", new OrdersDto());
-        System.out.println("pizda");
-        return "addOrders";
+        System.out.println("asdfasgasgaf");
+        return "addorders";
     }
 
     @PostMapping("/orders/add")
-    public String addMenu(@ModelAttribute OrdersDto ordersDto, Model model) {
-        System.out.println("HUIHUIHUI");
+    public String addOrders(@ModelAttribute OrdersDto ordersDto, Model model) {
+        if(ordersDto.getOrders_client()!=1 || ordersDto.getOrders_Menu().isEmpty()){
+            System.out.println("Now you know error is somewhere here");
+        }
         ordersService.create(ordersDto);
-        return "redirect:/menu"; // Redirect to a confirmation page or back to the form
+        model.addAttribute("ordersDto", ordersDto);
+        return "redirect:/orders"; // Redirect to a confirmation page or back to the form
     }
     @GetMapping("orders/delete/{id}")
     public String deleteOrders(@PathVariable Long id){
@@ -43,14 +42,14 @@ public class OrdersController {
         return "redirect:/orders";
     }
     @GetMapping("orders/edit/{id}")
-    public String editMenu(@PathVariable long id, Model model) {
+    public String editOrders(@PathVariable long id, Model model) {
         ordersService.setCurrentOrder(id);
         model.addAttribute("orders", ordersService.readOne().orElseThrow());
         return "editOrders";
     }
 
-    @PostMapping("menu/edit")
-    public String editMenu(@ModelAttribute OrdersDto ordersDto, Model model) {
+    @PostMapping("orders/edit")
+    public String editOrders(@ModelAttribute OrdersDto ordersDto, Model model) {
         ordersService.setCurrentOrder(ordersDto.getId());
         try {
             ordersService.update(ordersDto);
@@ -58,6 +57,6 @@ public class OrdersController {
             System.out.println("There is nothing bro");
         }
         model.addAttribute("client", ordersDto);
-        return "redirect:/menu";
+        return "redirect:/orders";
     }
 }

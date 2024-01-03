@@ -1,5 +1,6 @@
 package tjv.tokumshy_semestrialwork.kazakhcuisine.entities;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 
 import java.util.Collection;
@@ -7,6 +8,7 @@ import java.util.HashSet;
 import java.util.Objects;
 
 @Entity
+@Table(name = "clients")
 public class Clients implements EntityWithId<Long> {
 
     @Id
@@ -17,7 +19,7 @@ public class Clients implements EntityWithId<Long> {
     private String name;
     @Column(name="surname")
     private String surname;
-    @OneToMany(mappedBy = "orders_client")
+    @OneToMany(mappedBy = "orders_client",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Collection<Orders> client_order;
     @OneToMany(mappedBy = "booking_client")
     private Collection<Booking> client_booking;
@@ -92,6 +94,10 @@ public class Clients implements EntityWithId<Long> {
         this.surname = surname;
         client_order=new HashSet<>();
         client_booking=new HashSet<>();
+    }
+    public Clients(Long id) {
+        this.id = id;
+
     }
 
     @Override

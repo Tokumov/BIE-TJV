@@ -21,7 +21,7 @@ public class OrdersClient {
 
     public OrdersClient(@Value("http://localhost:8081") String baseurl) {
         var c = ClientBuilder.newClient();
-        baseUrl = c.target(baseurl + "/menu");
+        baseUrl = c.target(baseurl + "/orders");
         target = baseUrl.path("/{id}");
     }
 

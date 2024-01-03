@@ -60,6 +60,14 @@ public class ClientsDto {
         this.name=name;
 
     }
+    public ClientsDto(Long id,String name, String surname,Collection<Long> client_order, Collection<Long> client_booking){
+        this.id=id;
+        this.client_order=client_order;
+        this.client_booking=client_booking;
+        this.surname=surname;
+        this.name=name;
+
+    }
 
 
 

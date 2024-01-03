@@ -112,24 +112,24 @@
 
     </style>
 </head>
-<h4>Cleints management</h4>
+<h4>Orders management</h4>
 <table class="table" style="text-align: center">
     <thead>
-    <th>Name</th>
-    <th>Surname</th>
+    <th>Total cost</th>
+    <th>Client ID</th>
     <th>Edit/Delete</th>
     </thead>
     <tbody>
-    <tr th:each="client : ${Clientslist}">
-        <td th:text="${client.name}"></td>
-        <td th:text="${client.surname}"></td>
+    <tr th:each="order : ${orderslist}">
+        <td th:text="${order.totalcost}"></td>
+        <td th:text="${order.orders_client}"></td>
         <td>
             <div class="btn-group" role="group" aria-label="Basic example">
-                <a th:href="@{'/client/edit/' + ${client.id}}">
+                <a th:href="@{'/orders/edit/' + ${order.id}}">
                     <button class="button">edit</button>
                 </a>
 
-                <form th:action="@{'/client/delete/' + ${client.id}}" th:object="${client}" method="get">
+                <form th:action="@{'/orders/delete/' + ${order.id}}" th:object="${order}" method="get">
                     <button class="button">Delete</button>
                 </form>
             </div>
@@ -137,6 +137,6 @@
     </tr>
     </tbody>
 </table>
-<a th:href="@{'/client/add'}" class="button" style="margin-left: 35px;">Add Client</a>
+<a th:href="@{'/orders/add'}" class="button" style="margin-left: 35px;">Add Order</a>
 </body>
 </html>

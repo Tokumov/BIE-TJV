@@ -14,6 +14,17 @@ public class OrdersDto {
     public OrdersDto(){
         
     }
+
+    public OrdersDto(Long totalcost, Long orders_client){
+        this.totalcost=totalcost;
+        this.orders_client=orders_client;
+    }
+    public OrdersDto(Long id, Long totalcost, Long orders_client, Collection<Long> orders_Menu){
+        this.id=id;
+        this.totalcost=totalcost;
+        this.orders_client=orders_client;
+        this.orders_Menu=orders_Menu;
+    }
     public Long getId() {
         return id;
     }

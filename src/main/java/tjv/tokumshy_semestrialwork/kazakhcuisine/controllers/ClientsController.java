@@ -1,32 +1,83 @@
 package tjv.tokumshy_semestrialwork.kazakhcuisine.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.DTO.ClientsDto;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.Service.ClientsService;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.converter.ClientsDtoToClientsConverter;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.converter.ClientsToClientsDtoConverter;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.entities.Clients;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.repositories.ClientRepository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @RestController
 @RequestMapping("/clients")
-public class ClientsController extends CrudController<Clients,Long, ClientsService, ClientRepository> {
-   /* @Autowired
+public class ClientsController {
+    @Autowired
     private ClientsService clientsService;
+    private final ClientsDtoToClientsConverter dtoToEntityConverter;
+    private final ClientsToClientsDtoConverter entityToDtoConverter;
+
+    @Autowired
+    public ClientsController(ClientsService clientsService,
+                             ClientsDtoToClientsConverter dtoToEntityConverter,
+                             ClientsToClientsDtoConverter entityToDtoConverter) {
+        this.clientsService = clientsService;
+        this.dtoToEntityConverter = dtoToEntityConverter;
+        this.entityToDtoConverter = entityToDtoConverter;
+    }
 
     @PostMapping
-    public ResponseEntity<?> createClient(@RequestBody Clients client) {
-        try {
-            clientsService.create(client); // Assumes a method in your service that handles the creation logic
-            return ResponseEntity.ok("Client added successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error adding client: " + e.getMessage());
+    public ResponseEntity<ClientsDto> createClient(@RequestBody ClientsDto clientsDto) {
+        Clients client = dtoToEntityConverter.convert(clientsDto);
+        Clients savedClient = clientsService.create(client);
+        ClientsDto savedClientDto = entityToDtoConverter.convert(savedClient);
+        return new ResponseEntity<>(savedClientDto, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ClientsDto> getClient(@PathVariable Long id) {
+        Optional<Clients> clientOptional = clientsService.readById(id);
+        if (!clientOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }*/
+        ClientsDto clientsDto = entityToDtoConverter.convert(clientOptional.get());
+        return new ResponseEntity<>(clientsDto, HttpStatus.OK);
+    }
 
-    public ClientsController(ClientsService service){
+    @PutMapping("/{id}")
+    public void updateClient(@PathVariable Long id, @RequestBody ClientsDto clientsDto) {
+        Optional<Clients> existingClientOptional = clientsService.readById(id);
+        System.out.println(id);
+        Clients clientToUpdate = dtoToEntityConverter.convert(clientsDto);
+        clientsService.update(id,clientToUpdate);
 
-        super(service);
+    }
+
+    @GetMapping
+    public List<ClientsDto> getAllClients() {
+        List<Clients> clientsList = StreamSupport.stream(clientsService.readAll().spliterator(), false)
+                .collect(Collectors.toList());
+        return clientsList.stream()
+                .map(entityToDtoConverter::convert)
+                .collect(Collectors.toList());
+    }
+
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
+        Optional<Clients> clientOptional = clientsService.readById(id);
+        if (!clientOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        clientsService.deleteById(clientOptional.get().getId());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.frontend.ui;
 
+import com.example.frontend.modeldto.MenuDto;
 import com.example.frontend.modeldto.OrdersDto;
 import com.example.frontend.service.OrdersService;
 import jakarta.ws.rs.BadRequestException;
@@ -19,6 +20,16 @@ public class OrdersController {
         model.addAttribute("orderslist", ordersService.readAll());
         return "orders";
     }
+    private Long temp;
+
+    public Long getTemp() {
+        return temp;
+    }
+
+    public void setTemp(Long temp) {
+        this.temp = temp;
+    }
+
     @GetMapping("/orders/add")
     public String addOrders(Model model) {
         model.addAttribute("ordersDto", new OrdersDto());
@@ -28,12 +39,10 @@ public class OrdersController {
 
     @PostMapping("/orders/add")
     public String addOrders(@ModelAttribute OrdersDto ordersDto, Model model) {
-        if(ordersDto.getOrders_client()!=1 || ordersDto.getOrders_Menu().isEmpty()){
-            System.out.println("Now you know error is somewhere here");
-        }
+
         ordersService.create(ordersDto);
         model.addAttribute("ordersDto", ordersDto);
-        return "redirect:/orders"; // Redirect to a confirmation page or back to the form
+        return "redirect:/orders";
     }
     @GetMapping("orders/delete/{id}")
     public String deleteOrders(@PathVariable Long id){

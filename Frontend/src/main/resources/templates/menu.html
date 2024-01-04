@@ -129,7 +129,7 @@
                     <button class="button">edit</button>
                 </a>
 
-                <form th:action="@{'/client/delete/' + ${menu.id}}" th:object="${menu}" method="get">
+                <form th:action="@{'/menu/delete/' + ${menu.id}}" th:object="${menu}" method="get">
                     <button class="button">Delete</button>
                 </form>
             </div>

@@ -1,4 +1,4 @@
-package com.example.frontend.modeldto;
+package tjv.tokumshy_semestrialwork.kazakhcuisine.DTO;
 
 import java.util.Collection;
 

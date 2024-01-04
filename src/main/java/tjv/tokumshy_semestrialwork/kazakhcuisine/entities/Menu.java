@@ -19,6 +19,15 @@ public class Menu implements EntityWithId<Long> {
 
     @ManyToMany(mappedBy = "orders_Menu")
     private Collection<Orders> menu_orders;
+
+    public Collection<Orders> getMenu_orders() {
+        return menu_orders;
+    }
+
+    public void setMenu_orders(Collection<Orders> menu_orders) {
+        this.menu_orders = menu_orders;
+    }
+
     public Menu(){
 
     }

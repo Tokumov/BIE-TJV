@@ -19,7 +19,7 @@ public class Clients implements EntityWithId<Long> {
     private String name;
     @Column(name="surname")
     private String surname;
-    @OneToMany(mappedBy = "orders_client",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "orders_client",cascade = CascadeType.REMOVE)
     private Collection<Orders> client_order;
     @OneToMany(mappedBy = "booking_client")
     private Collection<Booking> client_booking;

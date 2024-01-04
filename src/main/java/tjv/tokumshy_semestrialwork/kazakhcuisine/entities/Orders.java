@@ -1,10 +1,9 @@
 package tjv.tokumshy_semestrialwork.kazakhcuisine.entities;
 
 import jakarta.persistence.*;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.DTO.OrdersDto;
 
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "orders")
@@ -15,7 +14,7 @@ public class Orders implements EntityWithId<Long> {
     private Long id;
     @Column(name="total_cost")
     private Long totalcost;
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="client_id_orders")
     private Clients orders_client;
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
@@ -93,4 +92,5 @@ public class Orders implements EntityWithId<Long> {
     public void setId(Long aLong) {
         id=aLong;
     }
+
 }

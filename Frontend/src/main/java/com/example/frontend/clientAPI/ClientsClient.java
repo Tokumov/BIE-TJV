@@ -34,6 +34,7 @@ public class ClientsClient {
     public Collection<ClientsDto> readAll() {
         var res = baseUrl.request(MediaType.APPLICATION_JSON_TYPE)
                 .get(ClientsDto[].class);
+
         return Arrays.asList(res);
     }
 

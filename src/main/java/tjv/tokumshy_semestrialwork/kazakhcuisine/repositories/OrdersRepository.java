@@ -9,6 +9,7 @@ import tjv.tokumshy_semestrialwork.kazakhcuisine.entities.Orders;
 import java.util.Collection;
 @Repository
 public interface OrdersRepository extends CrudRepository<Orders,Long> {
+
  /* @Query("SELECT o FROM Orders o JOIN o.orders_Menu m WHERE " +
             "o.orders_Menu.size = 3 AND m.price < 15 GROUP BY o HAVING COUNT(m) = 3")
     Collection<Orders> findOrdersWithThreeDishesUnder15Euros();*/

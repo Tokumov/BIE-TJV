@@ -64,23 +64,6 @@ public class OrdersDto {
     public void setOrders_Menu(Collection<Long> orders_Menu) {
         this.orders_Menu = orders_Menu;
     }
-    public static OrdersDto fromModel(Orders orders){
 
-        OrdersDto ordersDto = new OrdersDto();
-        ordersDto.setId(orders.getId());
-        ordersDto.setTotalcost(orders.getTotalcost());
-        ordersDto.setOrders_client(orders.getOrders_client().getId());
-        if (orders.getOrders_Menu() == null)
-            ordersDto.setOrders_Menu(new HashSet<>());
-        else
-        {
-            Collection<Long> Menuid = new ArrayList<>();
-            for (Menu menu : orders.getOrders_Menu()) {
-                Menuid.add(menu.getId());
-            }
-            ordersDto.setOrders_Menu(Menuid);
-        }
-        return ordersDto;
-    }
 
 }

@@ -18,6 +18,7 @@ public class Orders implements EntityWithId<Long> {
     @JoinColumn(name="client_id_orders")
     private Clients orders_client;
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.PERSIST,
             CascadeType.MERGE
     })
     @JoinTable(

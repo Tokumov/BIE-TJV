@@ -21,7 +21,7 @@ public class Clients implements EntityWithId<Long> {
     private String surname;
     @OneToMany(mappedBy = "orders_client",cascade = CascadeType.REMOVE)
     private Collection<Orders> client_order;
-    @OneToMany(mappedBy = "booking_client")
+    @OneToMany(mappedBy = "booking_client", cascade = CascadeType.ALL)
     private Collection<Booking> client_booking;
 
     public Clients() {

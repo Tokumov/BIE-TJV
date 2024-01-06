@@ -25,10 +25,6 @@ public class ClientController {
         return "addclient";
     }
 
- /*   @PostMapping("client/add")
-    public String clientPostAdd(@RequestParam String name, @RequestParam String surname, Model model){
-        return "";
-    }*/
  @PostMapping("/client/add")
  public String addClient(@ModelAttribute ClientsDto clientsDto, Model model) {
      System.out.println("HUIHUIHUI");

@@ -1,4 +1,4 @@
-package com.example.frontend.modeldto;
+package tjv.tokumshy_semestrialwork.kazakhcuisine.DTO;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -41,7 +41,4 @@ public class BookingDto {
     public void setBooking_client(Long booking_client) {
         this.booking_client = booking_client;
     }
-
-
-
 }

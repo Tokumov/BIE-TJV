@@ -54,7 +54,7 @@ public class OrdersController {
     public String editOrders(@PathVariable long id, Model model) {
         ordersService.setCurrentOrder(id);
         model.addAttribute("orders", ordersService.readOne().orElseThrow());
-        return "editOrders";
+        return "editorders";
     }
 
     @PostMapping("orders/edit")

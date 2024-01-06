@@ -17,7 +17,7 @@ public class Menu implements EntityWithId<Long> {
     @Column(name="price")
     private Long price;
 
-    @ManyToMany(mappedBy = "orders_Menu")
+    @ManyToMany(mappedBy = "orders_Menu",fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private Collection<Orders> menu_orders;
 
     public Collection<Orders> getMenu_orders() {

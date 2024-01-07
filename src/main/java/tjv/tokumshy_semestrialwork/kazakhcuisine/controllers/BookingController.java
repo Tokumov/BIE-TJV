@@ -79,7 +79,6 @@ public class BookingController {
     @PutMapping("/{id}")
     public void updateBooking(@PathVariable Long id, @RequestBody BookingDto bookingDto) throws EntityDoesNotExistException {
         try {
-            Optional<Booking> existingBookingOptional = bookingService.readById(id);
             Booking bookingToUpdate = dtoToEntityConverter.convert(bookingDto);
             bookingService.update(id, bookingToUpdate);
         }
@@ -91,11 +90,11 @@ public class BookingController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBooking(@PathVariable Long id) throws EntityDoesNotExistException {
-        Optional<Booking> bookingOptional = bookingService.readById(id);
+        /*Optional<Booking> bookingOptional = bookingService.readById(id);
         if (!bookingOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        bookingService.deleteById(bookingOptional.get().getId());
+        }*/
+        bookingService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

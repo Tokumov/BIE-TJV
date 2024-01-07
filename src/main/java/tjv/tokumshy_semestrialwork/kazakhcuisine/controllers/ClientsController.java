@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.DTO.ClientsDto;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityCannotBeCreatedException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityDoesNotExistException;
@@ -55,10 +56,12 @@ public class ClientsController {
 
     @PutMapping("/{id}")
     public void updateClient(@PathVariable Long id, @RequestBody ClientsDto clientsDto) throws EntityDoesNotExistException {
-        Optional<Clients> existingClientOptional = clientsService.readById(id);
-        System.out.println(id);
+        try{clientsService.readById(id).orElseThrow(EntityDoesNotExistException::new);
         Clients clientToUpdate = dtoToEntityConverter.convert(clientsDto);
-        clientsService.update(id,clientToUpdate);
+        clientsService.update(id,clientToUpdate);}
+        catch (EntityDoesNotExistException e){
+
+        }
 
     }
 
@@ -74,12 +77,12 @@ public class ClientsController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteClient(@PathVariable Long id) throws EntityDoesNotExistException {
-        Optional<Clients> clientOptional = clientsService.readById(id);
-        if (!clientOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public void deleteClient(@PathVariable Long id) throws EntityDoesNotExistException {
+        try{
+        clientsService.deleteById(id);}
+        catch (EntityDoesNotExistException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        clientsService.deleteById(clientOptional.get().getId());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
 }

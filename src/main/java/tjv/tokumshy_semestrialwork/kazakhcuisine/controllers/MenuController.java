@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.DTO.MenuDto;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityCannotBeCreatedException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityDoesNotExistException;
@@ -65,19 +66,17 @@ public class MenuController {
 
     @PutMapping("/{id}")
     public void updateMenu(@PathVariable Long id, @RequestBody MenuDto menuDto) throws EntityDoesNotExistException {
-        Optional<Menu> existingMenuOptional = menuService.readById(id);
+        try{menuService.readById(id).orElseThrow(EntityDoesNotExistException::new);
         Menu menuToUpdate = dtoToEntityConverter.convert(menuDto);
-        menuService.update(id,menuToUpdate);
+        menuService.update(id,menuToUpdate);}
+        catch(EntityDoesNotExistException entityDoesNotExistException){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMenu(@PathVariable Long id) throws EntityDoesNotExistException {
-        Optional<Menu> menuOptional = menuService.readById(id);
-        if (!menuOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        menuService.deleteById(menuOptional.get().getId());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public void deleteMenu(@PathVariable Long id) throws EntityDoesNotExistException {
+        menuService.deleteById(id);
     }
 }

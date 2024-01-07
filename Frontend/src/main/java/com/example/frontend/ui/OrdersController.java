@@ -30,7 +30,7 @@ public class OrdersController {
     @GetMapping("/orders/add")
     public String addOrders(Model model) {
         model.addAttribute("ordersDto", new OrdersDto());
-        System.out.println("asdfasgasgaf");
+
         return "addorders";
     }
 
@@ -53,12 +53,12 @@ public class OrdersController {
     @GetMapping("orders/edit/{id}")
     public String editOrders(@PathVariable long id, Model model) {
         try{
-        ordersService.setCurrentOrder(id);}
+        ordersService.setCurrentOrder(id);
+        model.addAttribute("orders", ordersService.readOne().orElseThrow(NoSuchElementException::new));
+            return "editorders";}
         catch (BadRequestException | NoSuchElementException noSuchElementException) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be created");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be updated");
         }
-        model.addAttribute("orders", ordersService.readOne().orElseThrow());
-        return "editorders";
     }
 
     @PostMapping("orders/edit")
@@ -66,7 +66,7 @@ public class OrdersController {
         try { ordersService.setCurrentOrder(ordersDto.getId());
             ordersService.update(ordersDto);
         } catch (BadRequestException | NoSuchElementException noSuchElementException) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be created");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be updated");
         }
         model.addAttribute("client", ordersDto);
         return "redirect:/orders";

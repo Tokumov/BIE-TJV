@@ -55,12 +55,16 @@ public class OrdersController {
 
     @GetMapping("/{id}")
     public ResponseEntity<OrdersDto> getOrder(@PathVariable Long id) {
+        try{
         Optional<Orders> orderOptional = ordersService.readById(id);
         if (!orderOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         OrdersDto ordersDto = entityToDtoConverter.convert(orderOptional.get());
-        return new ResponseEntity<>(ordersDto, HttpStatus.OK);
+        return new ResponseEntity<>(ordersDto, HttpStatus.OK);}
+        catch (EntityDoesNotExistException | EntityCannotBeCreatedException exception){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping
@@ -75,7 +79,7 @@ public class OrdersController {
     @PutMapping("/{id}")
     public void updateOrder(@PathVariable Long id, @RequestBody OrdersDto ordersDto){
      try{
-         Optional<Orders> existingOrderOptional = ordersService.readById(id);
+         ordersService.readById(id).orElseThrow(EntityDoesNotExistException::new);
         Orders orderToUpdate = dtoToEntityConverter.convert(ordersDto);
         ordersService.update(id,orderToUpdate);
         }
@@ -85,16 +89,8 @@ public class OrdersController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) throws EntityDoesNotExistException {
-      try{  Optional<Orders> orderOptional = ordersService.readById(id);
-        if (!orderOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        ordersService.deleteById(orderOptional.get().getId());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);}
-      catch (EntityDoesNotExistException entityDoesNotExistException){
-          throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-      }
+    public void deleteOrder(@PathVariable Long id) throws EntityDoesNotExistException {
+        ordersService.deleteById(id);
     }
     @GetMapping("/findorders")
     public Collection<OrdersDto>findOrdersWithDishHigherthanKandunderNtotalcost(){

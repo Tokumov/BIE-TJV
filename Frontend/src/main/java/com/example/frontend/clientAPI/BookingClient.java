@@ -30,7 +30,6 @@ public class BookingClient {
 
     public BookingDto create(BookingDto e) {
         try {
-            System.out.println("it is here");
             return baseUrl.request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.entity(e, MediaType.APPLICATION_JSON_TYPE), BookingDto.class);}
         catch(BadRequestException badRequestException){

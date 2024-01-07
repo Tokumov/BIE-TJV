@@ -23,49 +23,56 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
     @GetMapping("/booking")
-    public String clientlist(Model model) {
+    public String bookinglist(Model model) {
         model.addAttribute("Bookinglist", bookingService.readAll());
         return "booking";
     }
     @GetMapping("/booking/add")
-    public String addClient(Model model) {
+    public String addBooking(Model model) {
         model.addAttribute("bookingDto", new BookingDto());
         System.out.println("pizda");
         return "addbooking";
     }
 
     @PostMapping("/booking/add")
-    public String addClient(@ModelAttribute BookingDto bookingDto, Model model) {
-
+    public String addBooking(@ModelAttribute BookingDto bookingDto, Model model) {
+        try{
         bookingService.create(bookingDto);
-        return "redirect:/booking"; // Redirect to a confirmation page or back to the form
+        return "redirect:/booking";}
+        catch (BadRequestException badRequestException){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be created");
+        }
     }
     @GetMapping("booking/delete/{id}")
-    public String deleteClient(@PathVariable Long id){
+    public String deleteBooking(@PathVariable Long id){
         try{
         bookingService.setCurrentClient(id);
         bookingService.deleteOne();}
         catch (BadRequestException | NoSuchElementException noSuchElementException) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be created");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity doesn't exist");
         }
-        return "redirect:/client";
+        return "redirect:/booking";
     }
     @GetMapping("booking/edit/{id}")
-    public String editClient(@PathVariable long id, Model model) {
+    public String editBooking(@PathVariable long id, Model model) {
+        try{
         bookingService.setCurrentClient(id);
-        model.addAttribute("bookingDto", bookingService.readOne().orElseThrow());
-        return "editbooking";
+        model.addAttribute("bookingDto", bookingService.readOne().orElseThrow(NoSuchElementException::new));
+        return "editbooking";}
+        catch (BadRequestException | NoSuchElementException noSuchElementException){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be updated");
+        }
     }
 
     @PostMapping("booking/edit")
-    public String editClient(@ModelAttribute BookingDto bookingDto, Model model) {
-        bookingService.setCurrentClient(bookingDto.getId());
-        try {
+    public String editBooking(@ModelAttribute BookingDto bookingDto, Model model) {
+        try { bookingService.setCurrentClient(bookingDto.getId());
             bookingService.update(bookingDto);
-        } catch (BadRequestException e) {
-            System.out.println("There is nothing bro");
+            model.addAttribute("booking", bookingDto);
+            return "redirect:/booking";
+        } catch (NoSuchElementException | BadRequestException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be updated");
         }
-        model.addAttribute("booking", bookingDto);
-        return "redirect:/booking";
+
     }
 }

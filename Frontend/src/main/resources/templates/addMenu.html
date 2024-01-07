@@ -222,7 +222,7 @@
     </style>
 </head>
 <body>
-<header th:insert="header :: header"></header>
+<header th:insert="~{header :: header}"></header>
 <div class="login-box mt-5 mb-5">
     <h2>Adding Menu</h2>
     <form action="@{/menu/add}" th:action="@{/menu/add}" th:object="${menuDto}" method="post">

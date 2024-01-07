@@ -222,7 +222,7 @@
         }
     </style>
 </head>
-<header th:insert="header :: header" class="header"></header>
+<header th:insert="~{header :: header}" class="header"></header>
 <div class="login-box mt-5 mb-5">
     <h2>Edit Booking</h2>
     <form method="post" th:action="@{/booking/edit}" th:object="${bookingDto}">

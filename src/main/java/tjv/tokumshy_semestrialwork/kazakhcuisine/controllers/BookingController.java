@@ -82,19 +82,14 @@ public class BookingController {
             Booking bookingToUpdate = dtoToEntityConverter.convert(bookingDto);
             bookingService.update(id, bookingToUpdate);
         }
-        catch(EntityDoesNotExistException entityDoesNotExistException){
+        catch(EntityCannotBeCreatedException| EntityDoesNotExistException entityDoesNotExistException){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) throws EntityDoesNotExistException {
-        /*Optional<Booking> bookingOptional = bookingService.readById(id);
-        if (!bookingOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }*/
+    public void deleteBooking(@PathVariable Long id) throws EntityDoesNotExistException {
         bookingService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

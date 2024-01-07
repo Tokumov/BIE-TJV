@@ -51,23 +51,24 @@ public class MenuController {
     @GetMapping("menu/edit/{id}")
     public String editMenu(@PathVariable long id, Model model) {
         try{
-        menuService.setCurrentMenu(id);}
+        menuService.setCurrentMenu(id);
+        model.addAttribute("menu", menuService.readOne().orElseThrow(NoSuchElementException::new));
+            return "editmenu";}
         catch (BadRequestException | NoSuchElementException noSuchElementException) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be created");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be updated");
         }
-        model.addAttribute("menu", menuService.readOne().orElseThrow());
-        return "editmenu";
+
     }
 
     @PostMapping("menu/edit")
     public String editMenu(@ModelAttribute MenuDto menu, Model model) {
-        try { menuService.setCurrentMenu(menu.getId());
-
+        try {
+            menuService.setCurrentMenu(menu.getId());
             menuService.update(menu);
+            model.addAttribute("client", menu);
+            return "redirect:/menu";
         } catch (BadRequestException | NoSuchElementException noSuchElementException) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be created");
         }
-        model.addAttribute("client", menu);
-        return "redirect:/menu";
     }
 }

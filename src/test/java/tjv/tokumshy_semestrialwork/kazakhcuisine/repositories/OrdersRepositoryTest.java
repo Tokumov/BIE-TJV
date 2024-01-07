@@ -17,6 +17,6 @@ class OrdersRepositoryTest {
     }
 
     @Test
-    void findOrdersWithNDishesUnderKPrice() {
+    void findOrdersWithDishHigherthanKandunderNtotalcost() {
     }
 }

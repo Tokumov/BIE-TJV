@@ -13,11 +13,9 @@ public abstract class CrudService <E extends EntityWithId<ID>, ID, R extends Cru
     public CrudService(R repository){
         this.repository=repository;
     }
-    public E create(E data){
-        System.out.println("yeap you get it123123");
+    public E create(E data) throws EntityCannotBeCreatedException {
         ID id =data.getId();
         if(id!=null && repository.existsById(data.getId())){
-            System.out.println("Entity cannot be created bruh");
            throw new EntityCannotBeCreatedException();}
         return repository.save(data);
     }
@@ -29,13 +27,13 @@ public abstract class CrudService <E extends EntityWithId<ID>, ID, R extends Cru
         return repository.findById(id);
 
     }
-    public void update(ID id, E data){
+    public void update(ID id, E data) throws EntityDoesNotExistException {
         if(!repository.existsById(id))
             throw new EntityDoesNotExistException();
         data.setId(id);
         repository.save(data);
     }
-    public void deleteById(ID id){
+    public void deleteById(ID id) throws EntityDoesNotExistException {
         if(!repository.existsById(id))
             throw new EntityDoesNotExistException();
     repository.deleteById(id);

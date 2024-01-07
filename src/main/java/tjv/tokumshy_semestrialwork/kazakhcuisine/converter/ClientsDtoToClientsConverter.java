@@ -1,6 +1,7 @@
 package tjv.tokumshy_semestrialwork.kazakhcuisine.converter;
 
 import org.springframework.stereotype.Component;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityCannotBeCreatedException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.entities.Clients;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.DTO.ClientsDto;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.Service.OrdersService;
@@ -23,7 +24,9 @@ public class ClientsDtoToClientsConverter {
         clients.setId(clientsDto.getId());
         clients.setName(clientsDto.getName());
         clients.setSurname(clientsDto.getSurname());
-
+        if(clients.getName()==null || clients.getSurname()==null){
+            throw new EntityCannotBeCreatedException();
+        }
 
         if (clientsDto.getClient_order() != null) {
             clients.setClient_order(clientsDto.getClient_order().stream()
@@ -32,7 +35,6 @@ public class ClientsDtoToClientsConverter {
                     .map(Optional::get)
                     .collect(Collectors.toSet()));
         }
-
 
         if (clientsDto.getClient_booking() != null) {
             clients.setClient_booking(clientsDto.getClient_booking().stream()

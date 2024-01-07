@@ -227,15 +227,15 @@
     <h2>Adding orders</h2>
     <form action="@{/orders/add}" th:action="@{/orders/add}" th:object="${ordersDto}" method="post">
         <div class="user-box">
-            <input type="text" th:field="*{totalcost}" />
+            <input type="text" th:field="*{totalcost}" required/>
             <label>Total cost</label>
         </div>
         <div class="user-box">
-            <input type="text" th:field="*{orders_client}" />
+            <input type="text" th:field="*{orders_client}" required />
             <label>Client ID</label>
         </div>
         <div class="user-box">
-            <input type="text" th:field="*{orders_Menu}" />
+            <input type="text" th:field="*{orders_Menu}"required />
             <label>Menu ID</label>
         </div>
         <button type="submit" class="button">Submit</button>

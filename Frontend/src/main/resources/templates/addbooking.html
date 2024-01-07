@@ -227,15 +227,15 @@
     <h2>Adding Booking</h2>
     <form action="@{/booking/add}" th:action="@{/booking/add}" th:object="${bookingDto}" method="post">
         <div class="user-box">
-            <input type="time" min="09:00" max="18:00" th:field="*{time_of_booking}" />
+            <input type="time" min="09:00" max="18:00" th:field="*{time_of_booking}" required />
             <label>Time</label>
         </div>
         <div class="user-box">
-            <input type="date" value="2024-01-01" min="2024-01-01" max="2030-01-01" th:field="*{date_of_booking}" />
-            <label>Surname</label>
+            <input type="date" value="2024-01-01" min="2024-01-01" max="2030-01-01" th:field="*{date_of_booking}" required />
+            <label>Date of booking</label>
         </div>
         <div class="user-box">
-            <input type="text" th:field="*{booking_client}" />
+            <input type="text" th:field="*{booking_client}" required/>
             <label>Client ID</label>
         </div>
         <button type="submit" class="button">Submit</button>

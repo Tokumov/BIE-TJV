@@ -6,12 +6,17 @@ import com.example.frontend.service.ClientsService;
 import com.example.frontend.service.MenuService;
 import jakarta.ws.rs.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.NoSuchElementException;
+
 @Controller
 public class MenuController {
     @Autowired
@@ -30,36 +35,37 @@ public class MenuController {
 
     @PostMapping("/menu/add")
     public String addMenu(@ModelAttribute MenuDto menuDto, Model model) {
-        System.out.println("HUIHUIHUI");
-        System.out.println(menuDto.getName());
-        if(menuDto.getPrice()==null){
-            System.out.println("Error validation bro");
-            return "redirect /menu";
-        }
         menuService.create(menuDto);
-
         return "redirect:/menu"; // Redirect to a confirmation page or back to the form
     }
     @GetMapping("menu/delete/{id}")
     public String deleteMenu(@PathVariable Long id){
+        try{
         menuService.setCurrentMenu(id);
-        menuService.deleteOne();
+        menuService.deleteOne();}
+        catch (BadRequestException | NoSuchElementException noSuchElementException) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be created");
+        }
         return "redirect:/menu";
     }
     @GetMapping("menu/edit/{id}")
     public String editMenu(@PathVariable long id, Model model) {
-        menuService.setCurrentMenu(id);
+        try{
+        menuService.setCurrentMenu(id);}
+        catch (BadRequestException | NoSuchElementException noSuchElementException) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be created");
+        }
         model.addAttribute("menu", menuService.readOne().orElseThrow());
         return "editmenu";
     }
 
     @PostMapping("menu/edit")
     public String editMenu(@ModelAttribute MenuDto menu, Model model) {
-        menuService.setCurrentMenu(menu.getId());
-        try {
+        try { menuService.setCurrentMenu(menu.getId());
+
             menuService.update(menu);
-        } catch (BadRequestException e) {
-            System.out.println("There is nothing bro");
+        } catch (BadRequestException | NoSuchElementException noSuchElementException) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be created");
         }
         model.addAttribute("client", menu);
         return "redirect:/menu";

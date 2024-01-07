@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.DTO.OrdersDto;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityCannotBeCreatedException;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityDoesNotExistException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.Service.BookingService;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.Service.OrdersService;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.converter.OrdersDtoToOrdersConverter;
@@ -13,6 +16,7 @@ import tjv.tokumshy_semestrialwork.kazakhcuisine.entities.Orders;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.repositories.OrdersRepository;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -37,11 +41,16 @@ public class OrdersController {
     }
 
     @PostMapping
-    public ResponseEntity<OrdersDto> createOrder(@RequestBody OrdersDto ordersDto) {
+    public ResponseEntity<OrdersDto> createOrder(@RequestBody OrdersDto ordersDto) throws EntityCannotBeCreatedException {
+        try{
         Orders order = dtoToEntityConverter.convert(ordersDto);
         Orders savedOrder = ordersService.create(order);
         OrdersDto savedOrderDto = entityToDtoConverter.convert(savedOrder);
         return new ResponseEntity<>(savedOrderDto, HttpStatus.CREATED);
+        }
+        catch(EntityCannotBeCreatedException e){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{id}")
@@ -64,21 +73,36 @@ public class OrdersController {
     }
 
     @PutMapping("/{id}")
-    public void updateOrder(@PathVariable Long id, @RequestBody OrdersDto ordersDto) {
-        Optional<Orders> existingOrderOptional = ordersService.readById(id);
+    public void updateOrder(@PathVariable Long id, @RequestBody OrdersDto ordersDto){
+     try{
+         Optional<Orders> existingOrderOptional = ordersService.readById(id);
         Orders orderToUpdate = dtoToEntityConverter.convert(ordersDto);
         ordersService.update(id,orderToUpdate);
-
+        }
+        catch(EntityDoesNotExistException exception){
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+     }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
-        Optional<Orders> orderOptional = ordersService.readById(id);
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) throws EntityDoesNotExistException {
+      try{  Optional<Orders> orderOptional = ordersService.readById(id);
         if (!orderOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         ordersService.deleteById(orderOptional.get().getId());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);}
+      catch (EntityDoesNotExistException entityDoesNotExistException){
+          throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+      }
+    }
+    @GetMapping("/findorders")
+    public Collection<OrdersDto>findOrdersWithDishHigherthanKandunderNtotalcost(){
+        Collection<OrdersDto> ordersDto=new HashSet<>();
+        for(Orders orders:ordersService.findOrdersWithDishHigherthanKandunderNtotalcost()){
+            ordersDto.add(entityToDtoConverter.convert(orders));
+        }
+        return ordersDto;
     }
 }
 

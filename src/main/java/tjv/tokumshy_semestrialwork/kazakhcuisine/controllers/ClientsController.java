@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.DTO.ClientsDto;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityCannotBeCreatedException;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityDoesNotExistException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.Service.ClientsService;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.converter.ClientsDtoToClientsConverter;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.converter.ClientsToClientsDtoConverter;
@@ -34,7 +36,7 @@ public class ClientsController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientsDto> createClient(@RequestBody ClientsDto clientsDto) {
+    public ResponseEntity<ClientsDto> createClient(@RequestBody ClientsDto clientsDto) throws EntityCannotBeCreatedException {
         Clients client = dtoToEntityConverter.convert(clientsDto);
         Clients savedClient = clientsService.create(client);
         ClientsDto savedClientDto = entityToDtoConverter.convert(savedClient);
@@ -52,7 +54,7 @@ public class ClientsController {
     }
 
     @PutMapping("/{id}")
-    public void updateClient(@PathVariable Long id, @RequestBody ClientsDto clientsDto) {
+    public void updateClient(@PathVariable Long id, @RequestBody ClientsDto clientsDto) throws EntityDoesNotExistException {
         Optional<Clients> existingClientOptional = clientsService.readById(id);
         System.out.println(id);
         Clients clientToUpdate = dtoToEntityConverter.convert(clientsDto);
@@ -72,7 +74,7 @@ public class ClientsController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteClient(@PathVariable Long id) throws EntityDoesNotExistException {
         Optional<Clients> clientOptional = clientsService.readById(id);
         if (!clientOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

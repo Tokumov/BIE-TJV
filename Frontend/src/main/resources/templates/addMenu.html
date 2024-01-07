@@ -227,11 +227,11 @@
     <h2>Adding Menu</h2>
     <form action="@{/menu/add}" th:action="@{/menu/add}" th:object="${menuDto}" method="post">
         <div class="user-box">
-            <input type="text" th:field="*{name}" />
+            <input type="text" th:field="*{name}" required/>
             <label>Name</label>
         </div>
         <div class="user-box">
-            <input type="text" th:field="*{price}" />
+            <input type="text" th:field="*{price}" required/>
             <label>Price</label>
         </div>
         <button type="submit" class="button">Submit</button>

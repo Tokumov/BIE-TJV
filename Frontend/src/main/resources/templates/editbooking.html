@@ -224,20 +224,20 @@
 </head>
 <header th:insert="header :: header" class="header"></header>
 <div class="login-box mt-5 mb-5">
-    <h2>Edit orders</h2>
-    <form method="post" th:action="@{/orders/edit}" th:object="${orders}">
+    <h2>Edit Booking</h2>
+    <form method="post" th:action="@{/booking/edit}" th:object="${bookingDto}">
         <input type="hidden" name="id" th:field="*{id}">
         <div class="user-box">
-            <input type="text" th:field="*{totalcost}"required />
-            <label>Total cost</label>
+            <input type="time" min="09:00" max="18:00" th:field="*{time_of_booking}" required />
+            <label>Time</label>
         </div>
         <div class="user-box">
-            <input type="text" th:field="*{orders_client}" required/>
+            <input type="date" value="2024-01-01" min="2024-01-01" max="2030-01-01" th:field="*{date_of_booking}"required />
+            <label>Date</label>
+        </div>
+        <div class="user-box">
+            <input type="text" th:field="*{booking_client}" required/>
             <label>Client ID</label>
-        </div>
-        <div class="user-box">
-            <input type="text" th:field="*{orders_Menu}" required />
-            <label>Menu ID</label>
         </div>
         <button type="submit" class="button">Submit</button>
     </form>

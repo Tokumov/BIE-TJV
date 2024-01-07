@@ -44,4 +44,7 @@ public class OrdersService {
     public void deleteOne() {
         ordersClient.deleteOne();
     }
+    public Collection<OrdersDto>findOrdersWithDishHigherthanKandunderNtotalcost(){
+        return  ordersClient.findOrdersWithDishHigherthanKandunderNtotalcost(3L,15L);
+    }
 }

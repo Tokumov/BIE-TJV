@@ -228,11 +228,11 @@
     <form method="post" th:action="@{/client/edit}" th:object="${client}">
         <input type="hidden" name="id" th:field="*{id}">
             <div class="user-box">
-                <input type="text" th:field="*{name}" />
+                <input type="text" th:field="*{name}" required/>
                 <label>Name</label>
             </div>
         <div class="user-box">
-            <input type="text" th:field="*{surname}" />
+            <input type="text" th:field="*{surname}" required/>
             <label>Surname</label>
         </div>
         <button type="submit" class="button">Submit</button>

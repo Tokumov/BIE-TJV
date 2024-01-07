@@ -112,31 +112,20 @@
 
     </style>
 </head>
-<h4>Menu management</h4>
+<h4>Orders management</h4>
 <table class="table" style="text-align: center">
     <thead>
-    <th>Name</th>
-    <th>Price</th>
-    <th>Edit/Delete</th>
+    <th>Total cost</th>
+    <th>Client ID</th>
     </thead>
     <tbody>
-    <tr th:each="menu : ${menulist}">
-        <td th:text="${menu.name}"></td>
-        <td th:text="${menu.price}"></td>
-        <td>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <a th:href="@{'/menu/edit/' + ${menu.id}}">
-                    <button class="button">edit</button>
-                </a>
-
-                <form th:action="@{'/menu/delete/' + ${menu.id}}" th:object="${menu}" method="get">
-                    <button class="button">Delete</button>
-                </form>
-            </div>
-        </td>
+    <tr th:each="order : ${orderslist}">
+        <td th:text="${order.totalcost}"></td>
+        <td th:text="${order.orders_client}"></td>
     </tr>
     </tbody>
 </table>
-<a th:href="@{'/menu/add'}" class="button" style="margin-left: 35px;">Add Client</a>
+<a th:href="@{'/orders'}" class="button" style="margin-left: 35px;">return to orders</a>
+<a th:href="@{'/orders/findorders'}" class="button" style="margin-left: 35px;">find orders</a>
 </body>
 </html>

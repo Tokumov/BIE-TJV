@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.DTO.MenuDto;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityCannotBeCreatedException;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityDoesNotExistException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.Service.MenuService;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.converter.MenuDtoToMenuConverter;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.converter.MenuToMenuDtoConverter;
@@ -35,7 +37,7 @@ public class MenuController {
     }
 
     @PostMapping
-    public ResponseEntity<MenuDto> createMenu(@RequestBody MenuDto menuDto) {
+    public ResponseEntity<MenuDto> createMenu(@RequestBody MenuDto menuDto) throws EntityCannotBeCreatedException {
         Menu menu = dtoToEntityConverter.convert(menuDto);
         Menu savedMenu = menuService.create(menu);
         MenuDto savedMenuDto = entityToDtoConverter.convert(savedMenu);
@@ -62,7 +64,7 @@ public class MenuController {
     }
 
     @PutMapping("/{id}")
-    public void updateMenu(@PathVariable Long id, @RequestBody MenuDto menuDto) {
+    public void updateMenu(@PathVariable Long id, @RequestBody MenuDto menuDto) throws EntityDoesNotExistException {
         Optional<Menu> existingMenuOptional = menuService.readById(id);
         Menu menuToUpdate = dtoToEntityConverter.convert(menuDto);
         menuService.update(id,menuToUpdate);
@@ -70,7 +72,7 @@ public class MenuController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMenu(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMenu(@PathVariable Long id) throws EntityDoesNotExistException {
         Optional<Menu> menuOptional = menuService.readById(id);
         if (!menuOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -2,6 +2,7 @@ package tjv.tokumshy_semestrialwork.kazakhcuisine.converter;
 
 import org.springframework.stereotype.Component;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.DTO.MenuDto;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityCannotBeCreatedException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.Service.OrdersService;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.entities.Menu;
 
@@ -22,7 +23,9 @@ public class MenuDtoToMenuConverter {
         menu.setId(menuDto.getId());
         menu.setName(menuDto.getName());
         menu.setPrice(menuDto.getPrice());
-
+        if(menu.getName()==null || menu.getPrice()==null){
+            throw new EntityCannotBeCreatedException();
+        }
         if (menuDto.getMenu_orders() != null) {
             menu.setMenu_orders(menuDto.getMenu_orders().stream()
                     .map(ordersService::readById)

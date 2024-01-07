@@ -2,10 +2,11 @@ package tjv.tokumshy_semestrialwork.kazakhcuisine.converter;
 
 import org.springframework.stereotype.Component;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.DTO.BookingDto;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityCannotBeCreatedException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.entities.Booking;
 @Component
 public class BookingToBookingDtoConverter {
-    public BookingDto convert(Booking booking) {
+    public BookingDto convert(Booking booking) throws EntityCannotBeCreatedException {
         BookingDto bookingDto = new BookingDto();
 
         bookingDto.setId(booking.getId());
@@ -16,7 +17,9 @@ public class BookingToBookingDtoConverter {
         if (booking.getBooking_client() != null) {
             bookingDto.setBooking_client(booking.getBooking_client().getId());
         }
-
+        else{
+            throw new EntityCannotBeCreatedException();
+        }
 
         return bookingDto;
     }

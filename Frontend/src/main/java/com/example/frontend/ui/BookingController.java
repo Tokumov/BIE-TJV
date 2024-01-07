@@ -6,6 +6,7 @@ import com.example.frontend.service.BookingService;
 import com.example.frontend.service.ClientsService;
 import jakarta.ws.rs.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.NoSuchElementException;
+
 @Controller
 public class BookingController {
     @Autowired
@@ -31,19 +36,24 @@ public class BookingController {
 
     @PostMapping("/booking/add")
     public String addClient(@ModelAttribute BookingDto bookingDto, Model model) {
+
         bookingService.create(bookingDto);
         return "redirect:/booking"; // Redirect to a confirmation page or back to the form
     }
     @GetMapping("booking/delete/{id}")
     public String deleteClient(@PathVariable Long id){
+        try{
         bookingService.setCurrentClient(id);
-        bookingService.deleteOne();
+        bookingService.deleteOne();}
+        catch (BadRequestException | NoSuchElementException noSuchElementException) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity can't be created");
+        }
         return "redirect:/client";
     }
     @GetMapping("booking/edit/{id}")
     public String editClient(@PathVariable long id, Model model) {
         bookingService.setCurrentClient(id);
-        model.addAttribute("booking", bookingService.readOne().orElseThrow());
+        model.addAttribute("bookingDto", bookingService.readOne().orElseThrow());
         return "editbooking";
     }
 

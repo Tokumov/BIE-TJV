@@ -2,6 +2,7 @@ package tjv.tokumshy_semestrialwork.kazakhcuisine.converter;
 
 import org.springframework.stereotype.Component;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.DTO.OrdersDto;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.Exception.EntityCannotBeCreatedException;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.Service.ClientsService;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.Service.MenuService;
 import tjv.tokumshy_semestrialwork.kazakhcuisine.entities.Menu;
@@ -24,8 +25,11 @@ public class OrdersDtoToOrdersConverter {
         Orders orders = new Orders();
         orders.setId(ordersDto.getId());
         orders.setTotalcost(ordersDto.getTotalcost());
-        // Handling orders_client
+        if(orders.getTotalcost()==null){
+            throw new EntityCannotBeCreatedException();
+        }
         if(ordersDto.getOrders_Menu()!=null) {
+            clientsService.readById(ordersDto.getOrders_client()).orElseThrow(EntityCannotBeCreatedException::new);
             clientsService.readById(ordersDto.getOrders_client()).ifPresent(orders::setOrders_client);
         }
         else{
@@ -34,7 +38,7 @@ public class OrdersDtoToOrdersConverter {
         if (ordersDto.getOrders_Menu() != null) {
             Set<Menu> ordersmenuid = new HashSet<>();
             for (Long menuid : ordersDto.getOrders_Menu()) {
-                ordersmenuid.add(menuService.readById(menuid).orElseThrow());
+                ordersmenuid.add(menuService.readById(menuid).orElseThrow(EntityCannotBeCreatedException::new));
             }
             orders.setOrders_Menu(ordersmenuid);
         }

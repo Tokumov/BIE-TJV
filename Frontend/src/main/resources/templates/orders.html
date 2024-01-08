@@ -117,12 +117,14 @@
     <thead>
     <th>Total cost</th>
     <th>Client ID</th>
+    <th>Menu ID</th>
     <th>Edit/Delete</th>
     </thead>
     <tbody>
     <tr th:each="order : ${orderslist}">
         <td th:text="${order.totalcost}"></td>
         <td th:text="${order.orders_client}"></td>
+        <td th:text="${order.getOrders_Menu()}"></td>
         <td>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <a th:href="@{'/orders/edit/' + ${order.id}}">

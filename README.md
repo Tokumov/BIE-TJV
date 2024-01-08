@@ -13,7 +13,7 @@ To build and run this project, the following have to be installed:
 
 - Gradle (compatible with the version specified in your build.gradle)
 
-- A relational database (PostgreSQL recommended, H2 for testing)
+- A relational database (PostgreSQL recommended)
 
 # Setup and Running
 - Database Setup
@@ -23,7 +23,7 @@ Update src/main/resources/application.properties with the database connection de
 # Using the API
 The API provides endpoints for managing menus and orders. Example requests:
 
-Menu Management
+- Menu Management
 Create a Menu
 
 Method: POST

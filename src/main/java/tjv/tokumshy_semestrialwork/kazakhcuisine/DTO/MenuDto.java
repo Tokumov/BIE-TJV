@@ -1,6 +1,7 @@
 package tjv.tokumshy_semestrialwork.kazakhcuisine.DTO;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 public class MenuDto {
     private long id;
@@ -8,6 +9,13 @@ public class MenuDto {
     private Long price;
 
     private Collection<Long> menu_orders;
+
+    public MenuDto(long id, String name, long price) {
+        this.id=id;
+        this.name=name;
+        this.price=price;
+        this.menu_orders=new HashSet<>();
+    }
 
     public Collection<Long> getMenu_orders() {
         return menu_orders;

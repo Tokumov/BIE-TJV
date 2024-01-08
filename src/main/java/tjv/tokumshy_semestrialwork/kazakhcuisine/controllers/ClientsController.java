@@ -41,7 +41,7 @@ public class ClientsController {
         Clients client = dtoToEntityConverter.convert(clientsDto);
         Clients savedClient = clientsService.create(client);
         ClientsDto savedClientDto = entityToDtoConverter.convert(savedClient);
-        return new ResponseEntity<>(savedClientDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(savedClientDto, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -60,7 +60,7 @@ public class ClientsController {
         Clients clientToUpdate = dtoToEntityConverter.convert(clientsDto);
         clientsService.update(id,clientToUpdate);}
         catch (EntityDoesNotExistException e){
-
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
     }

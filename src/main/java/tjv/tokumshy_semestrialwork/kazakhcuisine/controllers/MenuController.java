@@ -39,10 +39,13 @@ public class MenuController {
 
     @PostMapping
     public ResponseEntity<MenuDto> createMenu(@RequestBody MenuDto menuDto) throws EntityCannotBeCreatedException {
-        Menu menu = dtoToEntityConverter.convert(menuDto);
+            try{ Menu menu = dtoToEntityConverter.convert(menuDto);
         Menu savedMenu = menuService.create(menu);
         MenuDto savedMenuDto = entityToDtoConverter.convert(savedMenu);
         return new ResponseEntity<>(savedMenuDto, HttpStatus.CREATED);
+       } catch(EntityCannotBeCreatedException e){
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{id}")
@@ -77,6 +80,10 @@ public class MenuController {
 
     @DeleteMapping("/{id}")
     public void deleteMenu(@PathVariable Long id) throws EntityDoesNotExistException {
-        menuService.deleteById(id);
+        try{
+        menuService.deleteById(id);}
+        catch (EntityDoesNotExistException entityDoesNotExistException){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }

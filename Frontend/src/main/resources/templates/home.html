@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="~{header :: header}"></header>
+</body>
+<body>
+<b>Specification</b><br>
+A Kazakh cuisine restaurant offers a unique dining experience that showcases the delicious and flavorful food of the Kazakh people. Kazakh cuisine is a fusion of various cooking traditions from Central Asia, Europe, and the Middle East, resulting in a rich and diverse menu. The user will have to be able to order food and book the seats in the restaurant, and all his orders will have to be stored in the database.<br>
+<strong>Complex query</strong>
+- Choose all orders that have dishes that cost more than 3 euro, but total cost of order is under 15 euro.
+
+<br>
+<strong>Business logic</strong>
+- If a client is deleted from the table, his reservation and orders will also be deleted due to uselessness.
+
+</body>
+
+</html>

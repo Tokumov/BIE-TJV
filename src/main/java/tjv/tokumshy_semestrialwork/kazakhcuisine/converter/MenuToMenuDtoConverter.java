@@ -26,7 +26,7 @@ public class MenuToMenuDtoConverter {
         if (menu.getMenu_orders() != null) {
             menuDto.setMenu_orders(menu.getMenu_orders().stream().map(Orders::getId).collect(Collectors.toList()));
         } else {
-            menuDto.setMenu_orders(new HashSet<>()); // or set to null, based on your design
+            menuDto.setMenu_orders(new HashSet<>());
         }
         return menuDto;
     }

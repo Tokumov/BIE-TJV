@@ -41,7 +41,7 @@ public class ClientsController {
         Clients client = dtoToEntityConverter.convert(clientsDto);
         Clients savedClient = clientsService.create(client);
         ClientsDto savedClientDto = entityToDtoConverter.convert(savedClient);
-        return new ResponseEntity<>(savedClientDto, HttpStatus.OK);
+        return new ResponseEntity<>(savedClientDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

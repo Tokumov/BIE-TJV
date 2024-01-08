@@ -27,7 +27,7 @@ public class MenuClient {
 
     public MenuDto create(MenuDto e) {
         if(e.getName()!=null){
-            System.out.println("it is here");
+
             return baseUrl.request(MediaType.APPLICATION_JSON_TYPE)
                     .post(Entity.entity(e, MediaType.APPLICATION_JSON_TYPE), MenuDto.class);}
         return new MenuDto();

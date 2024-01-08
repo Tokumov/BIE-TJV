@@ -56,7 +56,7 @@ public class ClientsControllerTest {
         when(entityToDtoConverter.convert(client)).thenReturn(clientsDto);
 
         ResponseEntity<ClientsDto> response = clientsController.createClient(clientsDto);
-        assertEquals(OK, response.getStatusCode());
+        assertEquals(CREATED, response.getStatusCode());
         assertEquals(clientsDto, response.getBody());
     }
     @Test

@@ -90,7 +90,11 @@ public class OrdersController {
 
     @DeleteMapping("/{id}")
     public void deleteOrder(@PathVariable Long id) throws EntityDoesNotExistException {
-        ordersService.deleteById(id);
+        try{
+        ordersService.deleteById(id);}
+        catch (EntityDoesNotExistException entityDoesNotExistException){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
     @GetMapping("/findorders")
     public Collection<OrdersDto>findOrdersWithDishHigherthanKandunderNtotalcost(){

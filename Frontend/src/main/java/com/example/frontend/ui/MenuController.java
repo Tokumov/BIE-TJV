@@ -29,14 +29,14 @@ public class MenuController {
     @GetMapping("/menu/add")
     public String addMenu(Model model) {
         model.addAttribute("menuDto", new MenuDto());
-        System.out.println("pizda");
+
         return "addMenu";
     }
 
     @PostMapping("/menu/add")
     public String addMenu(@ModelAttribute MenuDto menuDto, Model model) {
         menuService.create(menuDto);
-        return "redirect:/menu"; // Redirect to a confirmation page or back to the form
+        return "redirect:/menu";
     }
     @GetMapping("menu/delete/{id}")
     public String deleteMenu(@PathVariable Long id){

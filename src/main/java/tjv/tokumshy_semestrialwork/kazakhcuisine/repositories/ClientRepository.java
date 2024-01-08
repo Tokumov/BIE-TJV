@@ -8,6 +8,6 @@ import java.util.Collection;
 
 @Repository
 public  interface ClientRepository extends CrudRepository<Clients,Long> {
-//Collection<Clients>FindbyID(Long id);
+
 
 }

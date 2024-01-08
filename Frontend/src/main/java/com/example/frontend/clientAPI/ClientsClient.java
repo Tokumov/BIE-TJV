@@ -24,7 +24,7 @@ public class ClientsClient {
     }
 
     public ClientsDto create(ClientsDto e) {
-        System.out.println("it is here");
+
         return baseUrl.request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.entity(e, MediaType.APPLICATION_JSON_TYPE), ClientsDto.class);
     }

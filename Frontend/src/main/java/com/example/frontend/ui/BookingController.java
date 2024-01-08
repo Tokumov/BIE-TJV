@@ -30,7 +30,7 @@ public class BookingController {
     @GetMapping("/booking/add")
     public String addBooking(Model model) {
         model.addAttribute("bookingDto", new BookingDto());
-        System.out.println("pizda");
+
         return "addbooking";
     }
 

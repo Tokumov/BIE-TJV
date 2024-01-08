@@ -1,44 +1,94 @@
 package tjv.tokumshy_semestrialwork.kazakhcuisine.Service;
 
-import org.junit.jupiter.api.Assertions;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import tjv.tokumshy_semestrialwork.kazakhcuisine.entities.Clients;
-import tjv.tokumshy_semestrialwork.kazakhcuisine.repositories.ClientRepository;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.repository.CrudRepository;
+import tjv.tokumshy_semestrialwork.kazakhcuisine.entities.EntityWithId;
 
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
+@ExtendWith(MockitoExtension.class)
+public class CrudServiceTest {
 
-@SpringBootTest
-class CrudServiceUnitTest {
-    @MockBean
-    private ClientRepository clientRepository;
-    @Autowired
-    private CrudServiceSubclass service;
-    @Autowired
-    private ClientsService clientsService;
-    @Test
-    void createIdDoesNotExist() {
-        Clients newClient = new Clients(1L,"2","3");
-        Mockito.when(clientRepository.existsById(newClient.getId())).thenReturn(false);
-        Mockito.when(clientRepository.save(newClient)).thenReturn(newClient);
-        var ret = service.create(newClient);
-        Assertions.assertEquals(newClient, ret);
-        Mockito.verify(clientRepository, Mockito.atLeastOnce()).save(newClient);
+    @Mock
+    private CrudRepository<MyEntity, Long> repository;
+
+    private CrudService<MyEntity, Long, CrudRepository<MyEntity, Long>> crudService;
+
+    @BeforeEach
+    public void setUp() {
+        crudService = new CrudServiceSubclass(repository);
     }
+
     @Test
-    void testUpdate() {
+    public void testCreate() {
+        MyEntity entity = new MyEntity();
+        entity.setId(null);
+        when(repository.save(entity)).thenReturn(entity);
+
+        MyEntity created = crudService.create(entity);
+
+        assertEquals(entity, created);
+    }
+
+    @Test
+    public void testReadAll() {
+        Iterable<MyEntity> entities = mock(Iterable.class);
+        when(repository.findAll()).thenReturn(entities);
+        Iterable<MyEntity> found = crudService.readAll();
+        assertEquals(entities, found);
+    }
+
+    @Test
+    public void testReadById() {
         Long id = 1L;
-        Clients updatedEntity = new Clients(1L,"Andrew","Johnson");
-        Mockito.when(clientRepository.existsById(id)).thenReturn(false);
-        Mockito.when(clientRepository.save(updatedEntity)).thenReturn(updatedEntity);
-        service.update(id, updatedEntity);
-        Mockito.verify(clientRepository, Mockito.times(1)).save(updatedEntity);;
+        MyEntity entity = new MyEntity();
+        when(repository.findById(id)).thenReturn(Optional.of(entity));
+        Optional<MyEntity> found = crudService.readById(id);
+        assertTrue(found.isPresent());
+        assertEquals(entity, found.get());
+    }
+
+    @Test
+    public void testUpdate() {
+        Long id = 1L;
+        MyEntity entity = new MyEntity();
+        entity.setId(id);
+        when(repository.existsById(id)).thenReturn(true);
+        when(repository.save(entity)).thenReturn(entity);
+        assertDoesNotThrow(() -> crudService.update(id, entity));
+    }
+
+    @Test
+    public void testDeleteById() {
+        Long id = 1L;
+        when(repository.existsById(id)).thenReturn(true);
+        assertDoesNotThrow(() -> crudService.deleteById(id));
     }
 
 
+    private static class CrudServiceSubclass extends CrudService<MyEntity, Long, CrudRepository<MyEntity, Long>> {
+        CrudServiceSubclass(CrudRepository<MyEntity, Long> repository) {
+            super(repository);
+        }
+    }
+
+    private static class MyEntity implements EntityWithId<Long> {
+        private Long id;
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+    }
 }

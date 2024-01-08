@@ -25,14 +25,14 @@ public class ClientController {
     @GetMapping("/client/add")
     public String addClient(Model model) {
         model.addAttribute("clientDto", new ClientsDto());
-        System.out.println("pizda");
+
         return "addclient";
     }
 
  @PostMapping("/client/add")
  public String addClient(@ModelAttribute ClientsDto clientsDto, Model model) {
      clientsService.create(clientsDto);
-     return "redirect:/client"; // Redirect to a confirmation page or back to the form
+     return "redirect:/client";
  }
     @GetMapping("client/delete/{id}")
     public String deleteClient(@PathVariable Long id){

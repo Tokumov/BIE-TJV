@@ -29,7 +29,7 @@ public class OrdersClient {
     }
 
     public OrdersDto create(OrdersDto e) {
-            System.out.println("it is here");
+
             try{
             var res=baseUrl.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(e, MediaType.APPLICATION_JSON_TYPE), OrdersDto.class);
             if(res==null){
